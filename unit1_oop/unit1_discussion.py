@@ -21,12 +21,19 @@ from copy import copy, deepcopy
 # - Include at least two instance variables.
 # - Include a constructor (__init__).
 # - Include a method that returns or displays information about the object.
-#
-# Replace the pass statement with your implementation.
 
-class ParentClass:
-    pass
+class SewingProject:
+    category = "Sewing"    # class variable
 
+    def __init__(self, project_name: str, skill_level: str, est_time: float):    # constructor
+        self.project_name = project_name    # instance variable
+        self.skill_level = skill_level    # instance variable
+        self.est_time = est_time    # instance variable
+
+    def display(self):    # method that displays information about the object
+        print(f"Project name: {self.project_name}")
+        print(f"Skill level: {self.skill_level}")
+        print(f"Estimated time: {self.est_time} hours")
 
 # TODO 2:
 # Create a child class that inherits from the parent class.
@@ -37,11 +44,24 @@ class ParentClass:
 # - Add at least two new instance variables.
 # - Add at least one new method.
 # - Override a method from the parent class.
-#
-# Replace the pass statement with your implementation.
 
-class ChildClass(ParentClass):
-    pass
+class Apparel(SewingProject):    # child class, inherits from parent SewingProject
+    project_type = "Clothing"    # new class variable
+
+    def __init__(self, project_name: str, skill_level: str, est_time: float, fabric_type: str, fabric_quantity: float):
+        super().__init__(project_name, skill_level, est_time)
+        self.fabric_quantity = fabric_quantity    # instance variable
+        self.fabric_type = fabric_type    # instance variable
+        self.notion_list = []
+
+    def add_notion(self, notion: str):    # new method for adding to notion_list
+        self.notion_list.append(notion)
+
+    def display(self):    # overrides display() method from the parent class
+        super().display()
+        print(f"Fabric type: {self.fabric_type}")
+        print(f"Fabric quantity: {self.fabric_quantity} yards")
+        print(f"Required notion(s): {', '.join(self.notion_list)}")
 
 
 # TODO 3:
@@ -56,9 +76,30 @@ class ChildClass(ParentClass):
 # - Display information about the class namespace.
 
 def demonstrate_namespaces():
-    print("\n=== Namespace Demonstration ===")
-    print("TODO: Implement namespace demonstration")
+    print("\n=== Namespace Demonstration ===\n")
 
+    # create first object using child class
+    project1 = Apparel("Floral Dress", "Beginner", 4.0, "Cotton", 2.5)
+    project1.add_notion("Elastic")
+
+    # create second object using child class
+    project2 = Apparel("Autumn Coat", "Intermediate", 8.5, "Wool", 4.0)
+    project2.add_notion("Buttons")
+    project2.add_notion("Interfacing")
+    project2.is_warm = True    # adding attribute to project2
+
+    # display information about each object's namespace
+    print("Project 1 Instance Namespace: \n", project1.__dict__)
+    print("Project 2 Instance Namespace: \n", project2.__dict__)
+    # display information about the class namespace
+    print("Apparel Class Namespace: \n", Apparel.__dict__)
+
+    print("\n=== Access class variable through Class ===\n")
+    print(Apparel.project_type)
+
+    print("\n=== Access class variable through Object ===\n")
+    print("Project 1: ", project1.project_type)
+    print("Project 2: ", project2.project_type)
 
 # TODO 4:
 # Create a function that demonstrates shallow copying and deep copying.
@@ -72,9 +113,29 @@ def demonstrate_namespaces():
 # - Use comments to explain the difference between shallow and deep copying.
 
 def demonstrate_copying():
-    print("\n=== Copy Demonstration ===")
-    print("TODO: Implement shallow copy and deep copy demonstration")
+    print("\n=== Copy Demonstration ===\n")
 
+    # object with nested mutable data
+    original = Apparel("Floral Dress", "Beginner", 4.0, "Cotton", 2.5)
+    original.add_notion("Elastic")
+
+    shallow_copy = copy(original)    # creating shallow copy
+    deep_copy = deepcopy(original)    # creating deep copy
+
+    original.notion_list.remove("Elastic")    # modifying the original object's nested data
+
+    # display the original object, shallow copy and deep copy
+    print(f"Original notions: {original.notion_list}")
+    print(f"Shallow copy: {shallow_copy.notion_list}")
+    print(f"Deep copy: {deep_copy.notion_list}")
+
+"""
+    Shallow copies create new outer objects, however they copy the REFERENCES of nested objects instead of creating new copies of them.
+    Deep copies create completely new copies of referenced objects, including the nested objects.
+    This means that any changes to the original object's referenced data will also affect the shallow copy and vice versa.
+    Meanwhile, the deep copy will remain unchanged.
+    Reference: https://www.geeksforgeeks.org/blogs/difference-between-shallow-and-deep-copy-of-a-class/
+"""
 
 # TODO 5:
 # Complete the main function.
@@ -89,10 +150,20 @@ def demonstrate_copying():
 def main():
     print("=== Unit 1 OOP Assignment ===")
 
-    print("\nTODO: Create and test your parent object")
+    print("\nTODO: Create and test your parent object\n")
 
-    print("\nTODO: Create and test your child object")
+    # create object from the parent class
+    project1 = SewingProject("Floral Dress", "Beginner", 4.0)
+    project1.display()
 
+    print("\nTODO: Create and test your child object\n")
+
+    # create object from the child class
+    apparel1 = Apparel("Floral Dress", "Beginner", 4.0, "Cotton", 2.5)
+    apparel1.add_notion("Elastic")
+    apparel1.display()
+
+    # call to namespace and copy demonstration functions
     demonstrate_namespaces()
     demonstrate_copying()
 
