@@ -25,15 +25,25 @@ from copy import copy, deepcopy
 class SewingProject:
     category = "Sewing"    # class variable
 
-    def __init__(self, project_name: str, skill_level: str, est_time: float):    # constructor
+    def __init__(self, project_name: str, skill_level: str, est_time: float, status: str):    # constructor
         self.project_name = project_name    # instance variable
         self.skill_level = skill_level    # instance variable
         self.est_time = est_time    # instance variable
+        self.is_complete = False    # student-created extension (TODO 6)
+        self.status = status
 
     def display(self):    # method that displays information about the object
         print(f"Project name: {self.project_name}")
         print(f"Skill level: {self.skill_level}")
         print(f"Estimated time: {self.est_time} hours")
+        print(f"Status: {self.status}")
+
+    def project_check(self, is_complete: bool):
+        if is_complete:
+            self.status = "Project has been completed!"
+        else:
+            self.status = "In Progress"
+
 
 # TODO 2:
 # Create a child class that inherits from the parent class.
@@ -48,8 +58,8 @@ class SewingProject:
 class Apparel(SewingProject):    # child class, inherits from parent SewingProject
     project_type = "Clothing"    # new class variable
 
-    def __init__(self, project_name: str, skill_level: str, est_time: float, fabric_type: str, fabric_quantity: float):
-        super().__init__(project_name, skill_level, est_time)
+    def __init__(self, project_name: str, skill_level: str, est_time: float, fabric_type: str, fabric_quantity: float, status: str):
+        super().__init__(project_name, skill_level, est_time, status)
         self.fabric_quantity = fabric_quantity    # instance variable
         self.fabric_type = fabric_type    # instance variable
         self.notion_list = []
@@ -79,11 +89,11 @@ def demonstrate_namespaces():
     print("\n=== Namespace Demonstration ===\n")
 
     # create first object using child class
-    project1 = Apparel("Floral Dress", "Beginner", 4.0, "Cotton", 2.5)
+    project1 = Apparel("Floral Dress", "Beginner", 4.0, "Cotton", 2.5, "In Progress")
     project1.add_notion("Elastic")
 
     # create second object using child class
-    project2 = Apparel("Autumn Coat", "Intermediate", 8.5, "Wool", 4.0)
+    project2 = Apparel("Autumn Coat", "Intermediate", 8.5, "Wool", 4.0, "In Progress")
     project2.add_notion("Buttons")
     project2.add_notion("Interfacing")
     project2.is_warm = True    # adding attribute to project2
@@ -116,7 +126,7 @@ def demonstrate_copying():
     print("\n=== Copy Demonstration ===\n")
 
     # object with nested mutable data
-    original = Apparel("Floral Dress", "Beginner", 4.0, "Cotton", 2.5)
+    original = Apparel("Floral Dress", "Beginner", 4.0, "Cotton", 2.5, "In Progress")
     original.add_notion("Elastic")
 
     shallow_copy = copy(original)    # creating shallow copy
@@ -153,14 +163,15 @@ def main():
     print("\nTODO: Create and test your parent object\n")
 
     # create object from the parent class
-    project1 = SewingProject("Floral Dress", "Beginner", 4.0)
+    project1 = SewingProject("Floral Dress", "Beginner", 4.0, "In Progress")
     project1.display()
 
     print("\nTODO: Create and test your child object\n")
 
     # create object from the child class
-    apparel1 = Apparel("Floral Dress", "Beginner", 4.0, "Cotton", 2.5)
+    apparel1 = Apparel("Floral Dress", "Beginner", 4.0, "Cotton", 2.5, "In Progress")
     apparel1.add_notion("Elastic")
+    apparel1.project_check(True)    # using project_check to change the status to "complete"
     apparel1.display()
 
     # call to namespace and copy demonstration functions
