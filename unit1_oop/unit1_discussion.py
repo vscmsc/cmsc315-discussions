@@ -29,7 +29,7 @@ class SewingProject:
         self.project_name = project_name    # instance variable
         self.skill_level = skill_level    # instance variable
         self.est_time = est_time    # instance variable
-        self.is_complete = False    # student-created extension (TODO 6)
+        self.is_complete = False    # student-created extension (TO-DO 6)
         self.status = status
 
     def display(self):    # method that displays information about the object
