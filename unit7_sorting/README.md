@@ -31,7 +31,7 @@ Bubble sort compares adjacent elements and swaps their positions if the first el
 It uses nested loops, with the outer loop iterating N - 1 times (given N elements in the array). 
 The inner loop handles the neighbor comparisons, gradually pushing the largest unsorted value to the end of the array (the highest index). 
 Each pass through the array pushes the largest remaining value to its correct index, until eventually 
-every value is placed in ascending order. Bubble sort has a runtime complexity of O(N2) and is generally 
+every value is placed in ascending order. Bubble sort has a runtime complexity of O(N^2) and is generally 
 less practical for real-world applications because many more efficient sorting algorithms exist. 
 However, with the early-exit condition implemented in the bubble_sort() method, bubble sort can stop 
 before completing all of its passes if no swaps occur during a pass. This makes it efficient for lists that are already or nearly sorted.
